@@ -12,7 +12,7 @@ N/A
 
 ## Usage
 
-To use this scheduler, follow this link (https://colint771.github.io/work-day-calendar)
+To use this scheduler, follow this link: [Work Day Scheduler](https://colint771.github.io/work-day-calendar)
 
 
 The following animation demonstrates the application functionality:
