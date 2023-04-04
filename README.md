@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a work day scheduler web application that allows you to input and save tasks or activities for each hour of the day from 9:00 AM through 7:00 PM. This app runs in the browser and features dynamically updated HTML and CSS elements powered by jQuery
+This is a work day scheduler web application that allows you to input and save tasks or activities for each hour of the day from 9:00 AM through 5:00 PM. This app runs in the browser and features dynamically updated HTML and CSS elements powered by jQuery
 
 ## Installation
 
