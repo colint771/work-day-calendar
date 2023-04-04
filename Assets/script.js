@@ -1,88 +1,55 @@
-var currentDay = moment().format('dddd') + " " + moment().format("Do MMM YYYY");
-var currentHour = moment().format('h:mm:ss a');
-var nineAm = $("#9am");
-var tenAm = $("#10am");
-var elevenAm = $("#11am");
-var twelvePm = $("#12pm");
-var onePm = $("#13pm");
-var twoPm = $("#14pm");
-var threePm = $("#15pm");
-var fourPm = $("#16pm");
-var fivePm = $("#17pm");
-var sixPm = $("#18pm");
-var sevenPm = $("#19pm");
-
-var hour = moment().hours() 
-var userInput;
-var hourSpan;
-
-var interval = setInterval(function() {
-  var momentNow = moment();
-  $('#currentDay').html(momentNow.format('YYYY MMMM DD') + ' ' + momentNow.format('dddd').substring(0,3).toUpperCase());
-  $('#currentDay').html(currentDay + " " + momentNow.format('hh:mm:ss A'))
-}, 100);
-function initPage() {
-  console.log("Current Hour " + hour);
-  var init9 = JSON.parse(localStorage.getItem("09:00 am"));
-  nineAm.val(init9);
-
-  var init10 = JSON.parse(localStorage.getItem("10:00 am"))
-  tenAm.val(init10);
-  
-  var init11 = JSON.parse(localStorage.getItem("11:00 am"))
-  elevenAm.val(init11);
-
-  var init12 = JSON.parse(localStorage.getItem("12:00 pm"))
-  twelvePm.val(init12);
-
-  var init1 = JSON.parse(localStorage.getItem("01:00 pm"))
-  onePm.val(init1);
-
-  var init2 = JSON.parse(localStorage.getItem("02:00 pm"))
-  twoPm.val(init2);
-
-  var init3 = JSON.parse(localStorage.getItem("03:00 pm"))
-  threePm.val(init3);
-
-  var init4 = JSON.parse(localStorage.getItem("04:00 pm"))
-  fourPm.val(init4);
-
-  var init5 = JSON.parse(localStorage.getItem("05:00 pm"))
-  fivePm.val(init5);
-
-  var init6 = JSON.parse(localStorage.getItem("06:00 pm"))
-  sixPm.val(init6);
-
-  var init7 = JSON.parse(localStorage.getItem("07:00 pm"))
-  sevenPm.val(init7);
-}
-  
-function background () {
-  $(".form-control").each(function () {
-    var timeTest = parseInt($(this).attr("id"));
-    hour = parseInt(hour);
-    console.log(timeTest);
-    console.log(hour);
-    
-    if (hour > timeTest) {
-      $(this).addClass("past");
-    } else if (hour < timeTest) {
-        $(this).addClass("future");
-    } else  {
-      $(this).addClass("present");
-    }
+//Functions and variables that allows you to pull cotentent from text area and time to be able to save them to local storage.
+$(document).ready(function () {
+  buttons.on("click", function () {
+    var textarea = $(this).siblings(".description").val().trim();
+    console.log(textarea);
+    var hour = $(this).parent().attr("id");
+    localStorage.setItem(hour, textarea);
   });
-}
 
-$(document).ready(function(){
-  initPage()
-  background()
+  // Function and variables that colors the blocks based on the current time
+  function blockcoloring() {
+    // Variable for current hour 
+    var currenttime = moment().hour();
+    
+    // Variables and if else statements to apply the past, present, or future class to each time block by comparing the id to the current hour.
+    $(".time-block").each(function () {
+      var blocks = parseInt($(this).attr("id").split("hour")[1]);
+      console.log(blocks);
+      if (blocks < currenttime) {
+        $(this).removeClass("future");
+        $(this).removeClass("present");
+        $(this).addClass("past");
+      } else if (blocks === currenttime) {
+        $(this).removeClass("past");
+        $(this).removeClass("future");
+        $(this).addClass("present");
+      } else {
+        $(this).removeClass("present");
+        $(this).removeClass("past");
+        $(this).addClass("future");
+      }
+    });
+  }
 
-  $(".saveBtn").on("click", function(){
-    userInput = $(this).siblings(".form-control").val().trim();
-    console.log(userInput);
-    hourSpan = $(this).siblings(".input-group-prepend").text().trim();
-    console.log(hourSpan);
-    localStorage.setItem(hourSpan, JSON.stringify(userInput));
-  })
+   // Code to get any user input that was saved in localStorage and set the values of the corresponding textarea elements.
+  $("#hour8 .description").val(localStorage.getItem("hour8"));
+  $("#hour9 .description").val(localStorage.getItem("hour9"));
+  $("#hour10 .description").val(localStorage.getItem("hour10"));
+  $("#hour11 .description").val(localStorage.getItem("hour11"));
+  $("#hour12 .description").val(localStorage.getItem("hour12"));
+  $("#hour13 .description").val(localStorage.getItem("hour13"));
+  $("#hour14 .description").val(localStorage.getItem("hour14"));
+  $("#hour15 .description").val(localStorage.getItem("hour15"));
+  $("#hour16 .description").val(localStorage.getItem("hour16"));
+  $("#hour17 .description").val(localStorage.getItem("hour17"));
+
+  blockcoloring();
 });
+
+// This displays the cureent date at the top of the schedule 
+$("#currentDay").text(moment().format("dddd, MMMM Do"));
+
+// variables for the cureent day and also the save buttons 
+var currentDay = $("#currentDay");
+var buttons = $(".saveBtn");
